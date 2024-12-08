@@ -11,13 +11,9 @@ jobs:
   send-message:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
+      - name: Checkout repository
         uses: actions/checkout@v2
-      
+
       - name: Send message to Telegram
         run: |
-          curl -X GET "https://api.telegram.org/bot$YOUR_BOT_TOKEN/sendMessage?chat_id=$CHAT_ID&text=$INPUT_MESSAGE"
-        env:
-          YOUR_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          CHAT_ID: ${{ secrets.CHAT_ID }}
-          INPUT_MESSAGE: ${{ github.event.inputs.message }}
+          curl -X GET "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.CHAT_ID }}&text=${{ github.event.inputs.message }}"
