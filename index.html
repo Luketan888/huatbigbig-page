@@ -102,7 +102,7 @@
 
 <script>
     // Initialize EmailJS with your user ID (replace 'your_user_id' with actual user ID from EmailJS)
-    emailjs.init("your_user_id");
+    emailjs.init("_ASfE8jqSfP0zIs63");
 
     // Form submission handler
     document.getElementById("claimForm").addEventListener("submit", function(event) {
@@ -124,7 +124,7 @@
             message: message
         };
 
-        emailjs.send("your_service_id", "your_template_id", templateParams)
+        emailjs.send("petalmail.com", "free_meal_claim", templateParams)
             .then(function(response) {
                 // Show success message
                 document.getElementById("confirmationMessage").textContent = 
