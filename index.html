@@ -139,10 +139,9 @@
             Message: ${message}
         `;
 
-        // Call GitHub Actions via API (replace YOUR_REPO and YOUR_USERNAME)
+        // Send data to GitHub API to trigger workflow
         const githubApiUrl = `https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/actions/workflows/send_message.yml/dispatches`;
 
-        // Send data to trigger the workflow
         fetch(githubApiUrl, {
             method: 'POST',
             headers: {
