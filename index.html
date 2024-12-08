@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claim Your Free Meal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script> <!-- EmailJS SDK -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -101,8 +100,9 @@
 </footer>
 
 <script>
-    // Initialize EmailJS with your user ID (replace 'your_user_id' with actual user ID from EmailJS)
-    emailjs.init("_ASfE8jqSfP0zIs63");
+    // Telegram Bot Token (replace with your actual bot token from BotFather)
+    const telegramBotToken = '6816615835:AAEUIh15Wo2lTlCAeafDkxNGfd9K3Y1Y8wM';
+    const chatId = 'YiLongMusk_bot';  // Replace with your actual chat ID
 
     // Form submission handler
     document.getElementById("claimForm").addEventListener("submit", function(event) {
@@ -115,25 +115,30 @@
         const email = document.getElementById("email").value;
         const message = document.getElementById("message").value;
 
-        // Send email using EmailJS
-        const templateParams = {
-            from_name: name,
-            sex: sex,
-            age: age,
-            email: email,
-            message: message
-        };
+        // Prepare the message to be sent to Telegram
+        const telegramMessage = `
+            Free Meal Claim Details:
 
-        emailjs.send("petalmail.com", "free_meal_claim", templateParams)
-            .then(function(response) {
+            Name: ${name}
+            Sex: ${sex}
+            Age: ${age}
+            Email: ${email}
+            Message: ${message}
+        `;
+
+        // Send the message to Telegram
+        fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(telegramMessage)}`)
+            .then(response => response.json())
+            .then(data => {
                 // Show success message
                 document.getElementById("confirmationMessage").textContent = 
                     "Thank you! Your details have been sent to Zhi Quan. Enjoy your meal!";
-            }, function(error) {
-                // Show error message if email fails to send
+            })
+            .catch(error => {
+                // Show error message if request fails
                 document.getElementById("confirmationMessage").textContent = 
                     "Oops! Something went wrong. Please try again later.";
-                console.error('Email sending error: ', error);
+                console.error('Error sending message to Telegram:', error);
             });
     });
 </script>
