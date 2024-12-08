@@ -1,7 +1,7 @@
 name: Send Message to Telegram
 
 on:
-  workflow_dispatch:  # Allows you to manually trigger the workflow
+  workflow_dispatch:  # Allows manual triggering of the workflow
 
 jobs:
   send-message:
@@ -13,4 +13,8 @@ jobs:
 
       - name: Send Message to Telegram
         run: |
-          curl -X GET "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.CHAT_ID }}&text=Hello%20from%20GitHub%20Actions"
+          echo "Sending message to Telegram..."
+          curl -X GET "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.CHAT_ID }}&text=${{ github.event.inputs.message }}"
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.CHAT_ID }}
