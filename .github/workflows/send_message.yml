@@ -1,0 +1,16 @@
+name: Send Message to Telegram
+
+on:
+  workflow_dispatch:  # Allows you to manually trigger the workflow
+
+jobs:
+  send-message:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Send Message to Telegram
+        run: |
+          curl -X GET "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.TELEGRAM_CHAT_ID }}&text=Hello%20from%20GitHub%20Actions"
