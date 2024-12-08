@@ -107,7 +107,6 @@
 
     <p id="confirmationMessage" class="confirmation-message"></p>
 
-    <!-- Disclaimer text -->
     <p class="disclaimer">
         To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
     </p>
@@ -119,7 +118,7 @@
 
 <script>
     document.getElementById("claimForm").addEventListener("submit", function(event) {
-        event.preventDefault();  // Prevent the form from reloading the page
+        event.preventDefault();  // Prevent form submission
 
         // Gather form data
         const name = document.getElementById("name").value;
@@ -139,9 +138,10 @@
             Message: ${message}
         `;
 
-        // Send data to GitHub API to trigger workflow
-        const githubApiUrl = `https://api.github.com/repos/Luketan888/huatbigbig-page/actions/workflows/send_message.yml/dispatches`;
+        // GitHub Actions API endpoint to trigger the workflow
+        const githubApiUrl = `https://api.github.com/repos/Luketan888/huatbigbig-page/.github/workflows/send_message.yml/dispatches`;
 
+        // Trigger GitHub Actions via fetch
         fetch(githubApiUrl, {
             method: 'POST',
             headers: {
@@ -149,13 +149,18 @@
                 'Authorization': `Bearer YOUR_GITHUB_TOKEN`
             },
             body: JSON.stringify({
-                ref: 'main',  // The branch to run the action on (usually 'main')
+                ref: 'main',  // Make sure this matches your branch name
                 inputs: {
                     message: githubMessage
                 }
             })
         })
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to trigger GitHub Action: ' + response.statusText);
+            }
+            return response.json();
+        })
         .then(data => {
             document.getElementById("confirmationMessage").textContent = 
                 "Thank you! Your details have been sent to Zhi Quan. Enjoy your meal!";
