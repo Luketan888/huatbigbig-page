@@ -85,7 +85,6 @@
 </header>
 
 <div class="container">
-    <!-- Updated form description -->
     <p class="form-description">
         Zhi Quan is a generous benefactor offering a free meal to those in need. Share your details to claim this gift — potentially a free Haidilao meal! 🥳
     </p>
@@ -140,7 +139,7 @@
             Message: ${message}
         `;
 
-        // Call GitHub Actions via API
+        // Call GitHub Actions via API (replace YOUR_REPO and YOUR_USERNAME)
         const githubApiUrl = `https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/actions/workflows/send_message.yml/dispatches`;
 
         // Send data to trigger the workflow
@@ -151,7 +150,7 @@
                 'Authorization': `Bearer YOUR_GITHUB_TOKEN`
             },
             body: JSON.stringify({
-                ref: 'main',
+                ref: 'main',  // The branch to run the action on (usually 'main')
                 inputs: {
                     message: githubMessage
                 }
