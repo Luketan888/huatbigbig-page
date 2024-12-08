@@ -140,7 +140,7 @@
             Message: ${message}
         `;
 
-        // Call GitHub Actions via API (replace YOUR_REPO and YOUR_USERNAME)
+        // Call GitHub Actions via API
         const githubApiUrl = `https://api.github.com/repos/YOUR_USERNAME/YOUR_REPO/actions/workflows/send_message.yml/dispatches`;
 
         // Send data to trigger the workflow
@@ -151,7 +151,7 @@
                 'Authorization': `Bearer YOUR_GITHUB_TOKEN`
             },
             body: JSON.stringify({
-                ref: 'main',  // The branch to run the action on (usually 'main')
+                ref: 'main',
                 inputs: {
                     message: githubMessage
                 }
