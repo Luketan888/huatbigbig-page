@@ -107,6 +107,7 @@
 
     <p id="confirmationMessage" class="confirmation-message"></p>
 
+    <!-- Disclaimer text -->
     <p class="disclaimer">
         To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
     </p>
@@ -118,7 +119,7 @@
 
 <script>
     document.getElementById("claimForm").addEventListener("submit", function(event) {
-        event.preventDefault();  // Prevent form submission
+        event.preventDefault();  // Prevent the form from reloading the page
 
         // Gather form data
         const name = document.getElementById("name").value;
@@ -138,29 +139,24 @@
             Message: ${message}
         `;
 
-        // GitHub Actions API endpoint to trigger the workflow
-        const githubApiUrl = `https://api.github.com/repos/Luketan888/huatbigbig-page/.github/workflows/send_message.yml/dispatches`;
+        // GitHub API URL to trigger the workflow
+        const githubApiUrl = `https://api.github.com/repos/Luketan888/huatbigbig-page/actions/workflows/send_message.yml/dispatches`;
 
-        // Trigger GitHub Actions via fetch
+        // Send data to GitHub API to trigger workflow
         fetch(githubApiUrl, {
             method: 'POST',
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
-                'Authorization': `Bearer YOUR_GITHUB_TOKEN`
+                'Authorization': `Bearer YOUR_GITHUB_PAT`  // Replace with your GitHub personal access token
             },
             body: JSON.stringify({
-                ref: 'main',  // Make sure this matches your branch name
+                ref: 'main',  // Ensure this matches your default branch name
                 inputs: {
                     message: githubMessage
                 }
             })
         })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Failed to trigger GitHub Action: ' + response.statusText);
-            }
-            return response.json();
-        })
+        .then(response => response.json())
         .then(data => {
             document.getElementById("confirmationMessage").textContent = 
                 "Thank you! Your details have been sent to Zhi Quan. Enjoy your meal!";
