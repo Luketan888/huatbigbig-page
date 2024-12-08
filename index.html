@@ -88,7 +88,7 @@
     
     <p id="confirmationMessage" class="message"></p>
 
-    <p>If you want to get in touch with Zhi Quan directly, you can also <a href="https://wa.me/+6593292812" target="_blank" class="whatsapp-link">message him on WhatsApp</a>!</p>
+    <p>If you want to get in touch with Zhi Quan directly, you can also <a href="https://wa.me/PHONE_NUMBER" target="_blank" class="whatsapp-link">message him on WhatsApp</a>!</p>
 </div>
 
 <footer>
@@ -105,15 +105,16 @@
             return;
         }
 
+        // Replace with Zhi Quan's actual phone number (without spaces, dashes, or parentheses)
+        const phoneNumber = "+6593292812"; // Replace this with the correct phone number
+
         // Send info to Zhi Quan via WhatsApp link
-        const whatsappLink = `https://wa.me/PHONE_NUMBER?text=I%20claim%20my%20free%20meal%20and%20here%20is%20my%20info:%20${encodeURIComponent(userInfo)}`;
+        const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('I claim my free meal and here is my info: ' + userInfo)}`;
         window.open(whatsappLink, "_blank");
 
         // Show confirmation message
         document.getElementById("confirmationMessage").textContent = 
             `Your claim is in! Zhi Quan will get your info soon. Thank you for participating! 🎉`;
-
-        // Optional: You can add email functionality here (using a form submission or email API)
     }
 </script>
 
