@@ -3,53 +3,119 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Huat Big Big</title>
+    <title>Huat Big Big - Claim Your Free Meal!</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            background-color: #f5f5f5;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
             margin: 0;
-            padding: 50px;
-        }
-        h1 {
-            color: #ff9800;
-        }
-        p {
-            font-size: 18px;
+            padding: 0;
             color: #333;
+        }
+        header {
+            background-color: #ff9800;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .message {
+            font-size: 1.2em;
+            margin-top: 20px;
+        }
+        .input-field {
+            width: 80%;
+            padding: 12px;
+            font-size: 1em;
+            margin-top: 15px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
         }
         button {
             background-color: #4caf50;
             color: white;
             border: none;
             padding: 15px 30px;
-            font-size: 16px;
+            font-size: 1.2em;
             cursor: pointer;
-            margin-top: 20px;
             border-radius: 5px;
+            transition: background-color 0.3s ease;
         }
         button:hover {
             background-color: #45a049;
         }
-        #message {
-            margin-top: 20px;
-            font-size: 18px;
-            color: red;
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1em;
+            color: #777;
+        }
+        .whatsapp-link {
+            color: #25D366;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Huat Big Big!</h1>
-    <p>Cheah Zhi Quan is a rich and generous guy who loves to share joy and meals!</p>
-    <button onclick="claimDeal()">Claim Your Free Meal</button>
-    <p id="message"></p>
 
-    <script>
-        function claimDeal() {
-            document.getElementById('message').textContent = 
-                "Tell Zhi Quan that he is rich and he will treat you Haidilao!";
+<header>
+    <h1>Huat Big Big - Claim Your Free Meal!</h1>
+</header>
+
+<div class="container">
+    <p>Cheah Zhi Quan is a rich and generous guy who loves to share joy and meals! 🥳</p>
+    <p class="message" id="message">Claim your free meal and enjoy the treat from Zhi Quan!</p>
+    
+    <!-- Input field for user's contact info -->
+    <input type="text" id="userInfo" class="input-field" placeholder="Enter your phone number or email">
+    
+    <!-- Button to send info to Zhi Quan -->
+    <button onclick="sendClaimInfo()">Claim Your Free Meal</button>
+    
+    <p id="confirmationMessage" class="message"></p>
+
+    <p>If you want to get in touch with Zhi Quan directly, you can also <a href="https://wa.me/PHONE_NUMBER" target="_blank" class="whatsapp-link">message him on WhatsApp</a>!</p>
+</div>
+
+<footer>
+    <p>&copy; 2024 Huat Big Big | All Rights Reserved</p>
+</footer>
+
+<script>
+    // Function to send info to Zhi Quan via WhatsApp or email
+    function sendClaimInfo() {
+        const userInfo = document.getElementById("userInfo").value.trim();
+
+        if (userInfo === "") {
+            document.getElementById("confirmationMessage").textContent = "Please enter your phone number or email!";
+            return;
         }
-    </script>
+
+        // Send info to Zhi Quan via WhatsApp link
+        const whatsappLink = `https://wa.me/PHONE_NUMBER?text=I%20claim%20my%20free%20meal%20and%20here%20is%20my%20info:%20${encodeURIComponent(userInfo)}`;
+        window.open(whatsappLink, "_blank");
+
+        // Show confirmation message
+        document.getElementById("confirmationMessage").textContent = 
+            `Your claim is in! Zhi Quan will get your info soon. Thank you for participating! 🎉`;
+
+        // Optional: You can add email functionality here (using a form submission or email API)
+    }
+</script>
+
 </body>
 </html>
