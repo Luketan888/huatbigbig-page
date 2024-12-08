@@ -6,15 +6,22 @@ on:
       message:
         description: 'Message to send to Telegram'
         required: true
-        type: string
+        default: 'Hello'
 
 jobs:
   send_message:
     runs-on: ubuntu-latest
     steps:
-      - name: Send Telegram message
+      - name: Check Inputs and Send Message
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.CHAT_ID }}
         run: |
-          curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=$1"
+          # Logging the message input for debugging
+          echo "Message: $1"
+          
+          # URL-encode the message to avoid issues with special characters
+          encoded_message=$(echo "$1" | jq -sRr @uri)
+          
+          # Send the message via Telegram Bot API
+          curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=$encoded_message"
