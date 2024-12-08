@@ -142,12 +142,15 @@
         // GitHub API URL to trigger the workflow
         const githubApiUrl = `https://api.github.com/repos/Luketan888/huatbigbig-page/actions/workflows/send_message.yml/dispatches`;
 
+        // Log message to console for debugging
+        console.log('Sending message:', githubMessage);
+
         // Send data to GitHub API to trigger workflow
         fetch(githubApiUrl, {
             method: 'POST',
             headers: {
                 'Accept': 'application/vnd.github.v3+json',
-                'Authorization': `Bearer PERSONAL_ACCESS_TOKEN`  // Replace with your GitHub PAT
+                'Authorization': `Bearer YOUR_PERSONAL_ACCESS_TOKEN`  // Replace with your GitHub PAT
             },
             body: JSON.stringify({
                 ref: 'main',  // Ensure this matches your default branch name
@@ -157,6 +160,7 @@
             })
         })
         .then(response => {
+            console.log('Response:', response);
             if (response.ok) {
                 return response.json();
             }
