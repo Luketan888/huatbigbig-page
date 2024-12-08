@@ -6,7 +6,76 @@
     <title>Claim Your Free Meal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Your CSS here */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #ff9800;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 3em;
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            text-align: center;
+        }
+        .form-field {
+            width: 80%;
+            padding: 12px;
+            font-size: 1em;
+            margin-top: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1em;
+            color: #777;
+        }
+        .confirmation-message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: green;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 20px;
+        }
+        .form-description {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #555;
+        }
     </style>
 </head>
 <body>
@@ -16,7 +85,10 @@
 </header>
 
 <div class="container">
-    <p>Tell us a little bit about yourself to claim your free meal from Zhi Quan! 🥳</p>
+    <!-- Updated form description -->
+    <p class="form-description">
+        Zhi Quan is a generous benefactor who is offering a free meal to those in need. Share your details to claim this gift.
+    </p>
     
     <!-- Form for user details -->
     <form id="claimForm">
@@ -35,6 +107,11 @@
     </form>
 
     <p id="confirmationMessage" class="confirmation-message"></p>
+
+    <!-- Disclaimer text -->
+    <p class="disclaimer">
+        To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
+    </p>
 </div>
 
 <footer>
