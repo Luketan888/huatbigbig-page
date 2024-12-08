@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Huat Big Big - Claim Your Free Meal!</title>
+    <title>Claim Your Free Meal</title>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script> <!-- EmailJS SDK -->
     <style>
         body {
             font-family: 'Poppins', sans-serif;
@@ -32,11 +33,7 @@
             border-radius: 8px;
             text-align: center;
         }
-        .message {
-            font-size: 1.2em;
-            margin-top: 20px;
-        }
-        .input-field {
+        .form-field {
             width: 80%;
             padding: 12px;
             font-size: 1em;
@@ -64,58 +61,81 @@
             font-size: 1em;
             color: #777;
         }
-        .whatsapp-link {
-            color: #25D366;
-            font-weight: bold;
+        .confirmation-message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: green;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>Huat Big Big - Claim Your Free Meal!</h1>
+    <h1>Claim Your Free Meal!</h1>
 </header>
 
 <div class="container">
-    <p>Cheah Zhi Quan is a rich and generous guy who loves to share joy and meals! 🥳</p>
-    <p class="message" id="message">Claim your free meal and enjoy the treat from Zhi Quan!</p>
+    <p>Tell us a little bit about yourself to claim your free meal from Zhi Quan! 🥳</p>
     
-    <!-- Input field for user's contact info -->
-    <input type="text" id="userInfo" class="input-field" placeholder="Enter your phone number or email">
-    
-    <!-- Button to send info to Zhi Quan -->
-    <button onclick="sendClaimInfo()">Claim Your Free Meal</button>
-    
-    <p id="confirmationMessage" class="message"></p>
+    <!-- Form for user details -->
+    <form id="claimForm">
+        <input type="text" id="name" class="form-field" placeholder="Your Name" required>
+        <select id="sex" class="form-field" required>
+            <option value="">Select Sex</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
+        </select>
+        <input type="number" id="age" class="form-field" placeholder="Your Age" required>
+        <input type="email" id="email" class="form-field" placeholder="Your Email Address" required>
+        <textarea id="message" class="form-field" placeholder="Any message?" rows="4"></textarea>
+        
+        <button type="submit">Claim Your Free Meal</button>
+    </form>
 
-    <p>If you want to get in touch with Zhi Quan directly, you can also <a href="https://wa.me/PHONE_NUMBER" target="_blank" class="whatsapp-link">message him on WhatsApp</a>!</p>
+    <p id="confirmationMessage" class="confirmation-message"></p>
 </div>
 
 <footer>
-    <p>&copy; 2024 Huat Big Big | All Rights Reserved</p>
+    <p>&copy; 2024 Claim Your Free Meal | All Rights Reserved</p>
 </footer>
 
 <script>
-    // Function to send info to Zhi Quan via WhatsApp or email
-    function sendClaimInfo() {
-        const userInfo = document.getElementById("userInfo").value.trim();
+    // Initialize EmailJS with your user ID (replace 'your_user_id' with actual user ID from EmailJS)
+    emailjs.init("your_user_id");
 
-        if (userInfo === "") {
-            document.getElementById("confirmationMessage").textContent = "Please enter your phone number or email!";
-            return;
-        }
+    // Form submission handler
+    document.getElementById("claimForm").addEventListener("submit", function(event) {
+        event.preventDefault();  // Prevent the form from reloading the page
 
-        // Replace with Zhi Quan's actual phone number (without spaces, dashes, or parentheses)
-        const phoneNumber = "+6593292812"; // Replace this with the correct phone number
+        // Gather form data
+        const name = document.getElementById("name").value;
+        const sex = document.getElementById("sex").value;
+        const age = document.getElementById("age").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
 
-        // Send info to Zhi Quan via WhatsApp link
-        const whatsappLink = `https://wa.me/${phoneNumber}?text=${encodeURIComponent('I claim my free meal and here is my info: ' + userInfo)}`;
-        window.open(whatsappLink, "_blank");
+        // Send email using EmailJS
+        const templateParams = {
+            from_name: name,
+            sex: sex,
+            age: age,
+            email: email,
+            message: message
+        };
 
-        // Show confirmation message
-        document.getElementById("confirmationMessage").textContent = 
-            `Your claim is in! Zhi Quan will get your info soon. Thank you for participating! 🎉`;
-    }
+        emailjs.send("your_service_id", "your_template_id", templateParams)
+            .then(function(response) {
+                // Show success message
+                document.getElementById("confirmationMessage").textContent = 
+                    "Thank you! Your details have been sent to Zhi Quan. Enjoy your meal!";
+            }, function(error) {
+                // Show error message if email fails to send
+                document.getElementById("confirmationMessage").textContent = 
+                    "Oops! Something went wrong. Please try again later.";
+                console.error('Email sending error: ', error);
+            });
+    });
 </script>
 
 </body>
