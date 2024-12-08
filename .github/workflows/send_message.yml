@@ -1,27 +1,16 @@
-name: Send Telegram Message
+name: Send Message to Telegram
 
 on:
-  workflow_dispatch:
-    inputs:
-      message:
-        description: 'Message to send to Telegram'
-        required: true
-        default: 'Hello'
+  workflow_dispatch:  # Allows you to manually trigger the workflow
 
 jobs:
-  send_message:
+  send-message:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Check Inputs and Send Message
-        env:
-          TELEGRAM_BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.CHAT_ID }}
+      - name: Checkout Code
+        uses: actions/checkout@v2
+
+      - name: Send Message to Telegram
         run: |
-          # Logging the message input for debugging
-          echo "Message: $1"
-          
-          # URL-encode the message to avoid issues with special characters
-          encoded_message=$(echo "$1" | jq -sRr @uri)
-          
-          # Send the message via Telegram Bot API
-          curl -X GET "https://api.telegram.org/bot$TELEGRAM_BOT_TOKEN/sendMessage?chat_id=$TELEGRAM_CHAT_ID&text=$encoded_message"
+          curl -X GET "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.CHAT_ID }}&text=Hello%20from%20GitHub%20Actions"
