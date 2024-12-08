@@ -14,7 +14,13 @@ jobs:
       - name: Send Message to Telegram
         run: |
           echo "Sending message to Telegram..."
-          curl -X GET "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.CHAT_ID }}&text=${{ github.event.inputs.message }}"
+          response=$(curl -s -w "%{http_code}" -X GET "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage?chat_id=${{ secrets.CHAT_ID }}&text=${{ github.event.inputs.message }}")
+          http_code=$(echo "$response" | tail -n 1)
+          if [ "$http_code" -ne 200 ]; then
+            echo "Error sending message. HTTP Status Code: $http_code"
+            exit 1
+          fi
+          echo "Message sent successfully!"
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
           CHAT_ID: ${{ secrets.CHAT_ID }}
