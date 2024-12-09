@@ -15,4 +15,6 @@ jobs:
       - name: Send Message to Telegram
         run: |
           echo "Sending message to Telegram..."
-          curl -X POST "https://api.telegram.org/bot7660044849:AAFH4BS_yBlcSkoWHY-cf3il4ewfnglq-MY/sendMessage" -d chat_id=297203268 -d text="$(echo ${{ github.event.inputs.message }} | jq -s -R -r @uri)"
+          curl -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+          -d chat_id=${{ secrets.CHAT_ID }} \
+          -d text="${{ github.event.inputs.message }}"
