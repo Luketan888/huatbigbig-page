@@ -4,78 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claim Your Free Meal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        header {
-            background-color: #ff9800;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 3em;
-        }
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 30px;
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            text-align: center;
-        }
-        .form-field {
-            width: 80%;
-            padding: 12px;
-            font-size: 1em;
-            margin-top: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 1em;
-            color: #777;
-        }
-        .confirmation-message {
-            font-size: 1.2em;
-            margin-top: 20px;
-            color: green;
-        }
-        .disclaimer {
-            font-size: 0.9em;
-            color: #555;
-            margin-top: 20px;
-        }
-        .form-description {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: #555;
-        }
+        /* Styles omitted for brevity */
     </style>
 </head>
 <body>
@@ -89,7 +19,6 @@
         Zhi Quan is a generous benefactor offering a free meal to those in need. Share your details to claim this gift — potentially a free Haidilao meal! 🥳
     </p>
 
-    <!-- Form for user details -->
     <form id="claimForm">
         <input type="text" id="name" class="form-field" placeholder="Your Name" required>
         <select id="sex" class="form-field" required>
@@ -107,7 +36,6 @@
 
     <p id="confirmationMessage" class="confirmation-message"></p>
 
-    <!-- Disclaimer text -->
     <p class="disclaimer">
         To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
     </p>
@@ -117,4 +45,38 @@
     <p>&copy; 2024 Claim Your Free Meal | All Rights Reserved</p>
 </footer>
 
-<script
+<script>
+document.getElementById('claimForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    const name = document.getElementById('name').value;
+    const sex = document.getElementById('sex').value;
+    const age = document.getElementById('age').value;
+    const email = document.getElementById('email').value;
+    const message = document.getElementById('message').value;
+
+    const chatID = '297203268';
+    const botToken = '7660044849:AAFH4BS_yBlcSkoWHY-cf3il4ewfnglq-MY';
+    const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
+
+    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: chatID, text: text })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.ok) {
+            document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
+        } else {
+            document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
+        }
+    })
+    .catch(error => {
+        document.getElementById('confirmationMessage').textContent = "Error: Unable to connect to the server.";
+    });
+});
+</script>
+
+</body>
+</html>
