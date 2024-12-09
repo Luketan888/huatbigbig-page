@@ -33,12 +33,6 @@
             border-radius: 15px;
             text-align: center;
         }
-        .container img {
-            max-width: 100%;
-            border-radius: 15px;
-            margin-bottom: 20px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
-        }
         .form-field {
             width: 90%;
             padding: 12px;
@@ -105,9 +99,6 @@
 </header>
 
 <div class="container">
-    <!-- Display an image of free food -->
-    <img src="https://www.haidilao.com/assets/images/home/hotpot.jpg" alt="Haidilao Hotpot - Free Meal" />
-
     <p class="form-description">
         Zhi Quan is a generous benefactor offering a free meal to those in need. Share your details to claim this gift — potentially a free Haidilao meal! 🥳
     </p>
@@ -163,6 +154,7 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
     .then(data => {
         if (data.ok) {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
+            document.getElementById('claimForm').reset(); // Clear the form
         } else {
             document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
         }
