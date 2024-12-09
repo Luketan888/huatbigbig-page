@@ -4,8 +4,98 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Claim Your Free Meal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        /* Styles omitted for brevity */
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        header {
+            background-color: #ff9800;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: white;
+            padding: 30px;
+            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            text-align: center;
+        }
+        .container img {
+            max-width: 100%;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-field {
+            width: 90%;
+            padding: 12px;
+            font-size: 1em;
+            margin-top: 15px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #ff9800;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #e58900;
+            transform: scale(1.05);
+        }
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 1em;
+            color: #777;
+        }
+        .confirmation-message {
+            font-size: 1.2em;
+            margin-top: 20px;
+            color: green;
+        }
+        .disclaimer {
+            font-size: 0.9em;
+            color: #555;
+            margin-top: 20px;
+        }
+        .form-description {
+            font-size: 1.2em;
+            margin-bottom: 20px;
+            color: #555;
+        }
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            button {
+                padding: 12px 25px;
+                font-size: 1em;
+            }
+            .container {
+                padding: 20px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -15,10 +105,14 @@
 </header>
 
 <div class="container">
+    <!-- Display an image of free food -->
+    <img src="https://www.haidilao.com/assets/images/home/hotpot.jpg" alt="Haidilao Hotpot - Free Meal" />
+
     <p class="form-description">
         Zhi Quan is a generous benefactor offering a free meal to those in need. Share your details to claim this gift — potentially a free Haidilao meal! 🥳
     </p>
 
+    <!-- Form for user details -->
     <form id="claimForm">
         <input type="text" id="name" class="form-field" placeholder="Your Name" required>
         <select id="sex" class="form-field" required>
@@ -36,6 +130,7 @@
 
     <p id="confirmationMessage" class="confirmation-message"></p>
 
+    <!-- Disclaimer text -->
     <p class="disclaimer">
         To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
     </p>
