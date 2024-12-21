@@ -132,7 +132,7 @@
 </footer>
 
 <script>
-document.getElementById('claimForm').addEventListener('submit', async function(event) {
+document.getElementById('claimForm').addEventListener('submit', function(event) {
     event.preventDefault();
 
     const name = document.getElementById('name').value;
@@ -143,26 +143,29 @@ document.getElementById('claimForm').addEventListener('submit', async function(e
 
     const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
 
-    try {
-        const response = await fetch('/api/secrets'); // Endpoint to get secrets
-        const { botToken, chatID } = await response.json();
-
-        const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: chatID, text: text })
-        });
-
-        const data = await telegramResponse.json();
-        if (data.ok) {
+    // Use GitHub Actions API to trigger the send_message workflow
+    fetch('https://api.github.com/repos/Luketan888/huatbigbig-page/actions/workflows/send_message.yml/dispatches', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'token {{ secrets.PERSONAL_ACCESS_TOKEN }}',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            ref: 'main',
+            inputs: { message: text }
+        })
+    })
+    .then(response => {
+        if (response.ok) {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
             document.getElementById('claimForm').reset(); // Clear the form
         } else {
-            document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
+            throw new Error('Failed to trigger the workflow');
         }
-    } catch (error) {
+    })
+    .catch(error => {
         document.getElementById('confirmationMessage').textContent = "Error: Unable to connect to the server.";
-    }
+    });
 });
 </script>
 
