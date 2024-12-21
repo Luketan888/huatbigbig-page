@@ -1,4 +1,4 @@
-name: Send Telegram Message
+name: Send Message to Telegram
 
 on:
   repository_dispatch:
@@ -9,8 +9,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Send message to Telegram
+      - name: Send Message to Telegram
         run: |
-          curl -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-          -d chat_id="${{ secrets.TELEGRAM_CHAT_ID }}" \
+          echo "Sending message to Telegram..."
+          curl -X POST "https://api.telegram.org/bot${{ secrets.BOT_TOKEN }}/sendMessage" \
+          -d chat_id=${{ secrets.CHAT_ID }} \
           -d text="${{ github.event.client_payload.message }}"
