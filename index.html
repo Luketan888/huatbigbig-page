@@ -143,24 +143,19 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
 
     const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
 
-    // Use GitHub Actions API to trigger the send_message workflow
-    fetch('https://api.github.com/repos/Luketan888/huatbigbig-page/actions/workflows/send_message.yml/dispatches', {
+    // Trigger GitHub Action here via API or webhook (no sensitive data in frontend code)
+    fetch('/trigger-github-action', {
         method: 'POST',
-        headers: {
-            'Authorization': 'token {{ secrets.PERSONAL_ACCESS_TOKEN }}',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            ref: 'main',
-            inputs: { message: text }
-        })
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ message: text })
     })
-    .then(response => {
-        if (response.ok) {
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
             document.getElementById('claimForm').reset(); // Clear the form
         } else {
-            throw new Error('Failed to trigger the workflow');
+            document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
         }
     })
     .catch(error => {
