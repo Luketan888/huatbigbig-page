@@ -143,13 +143,12 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
 
     const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
 
-    console.log('Submitting form:', text);  // Debugging log
-
+    // Send the data to GitHub API (replace with your actual access token and username)
     fetch('https://api.github.com/repos/Luketan888/huatbigbig-page/dispatches', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `token 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`  // Use your Personal Access Token directly here
+            'Authorization': `token YOUR_GITHUB_PERSONAL_ACCESS_TOKEN`
         },
         body: JSON.stringify({
             event_type: 'send-telegram-message',
@@ -158,8 +157,6 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
     })
     .then(response => response.json())
     .then(data => {
-        console.log('GitHub Action Response:', data);  // Debugging log
-
         if (data.status === 'success') {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
             document.getElementById('claimForm').reset(); // Clear the form
@@ -168,7 +165,6 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
         }
     })
     .catch(error => {
-        console.error('Error:', error);  // Debugging log
         document.getElementById('confirmationMessage').textContent = "Error: Unable to connect to the server.";
     });
 });
