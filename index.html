@@ -149,7 +149,7 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
-            'Authorization': `token ${process.env.PERSONAL_ACCESS_TOKEN}`  // Use GitHub Secrets for token securely
+            'Authorization': `token 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`  // Use your Personal Access Token directly here
         },
         body: JSON.stringify({
             event_type: 'send-telegram-message',
