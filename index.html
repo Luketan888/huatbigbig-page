@@ -132,7 +132,7 @@
 </footer>
 
 <script>
-document.getElementById('claimForm').addEventListener('submit', function(event) {
+document.getElementById('claimForm').addEventListener('submit', async function(event) {
     event.preventDefault();
 
     const name = document.getElementById('name').value;
@@ -141,27 +141,28 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
 
-    const chatID = '297203268';
-    const botToken = '7660044849:AAFH4BS_yBlcSkoWHY-cf3il4ewfnglq-MY';
     const text = `New Claim Submitted:\nName: ${name}\nSex: ${sex}\nAge: ${age}\nEmail: ${email}\nMessage: ${message}`;
 
-    fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ chat_id: chatID, text: text })
-    })
-    .then(response => response.json())
-    .then(data => {
+    try {
+        const response = await fetch('/api/secrets'); // Endpoint to get secrets
+        const { botToken, chatID } = await response.json();
+
+        const telegramResponse = await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: chatID, text: text })
+        });
+
+        const data = await telegramResponse.json();
         if (data.ok) {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
             document.getElementById('claimForm').reset(); // Clear the form
         } else {
             document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
         }
-    })
-    .catch(error => {
+    } catch (error) {
         document.getElementById('confirmationMessage').textContent = "Error: Unable to connect to the server.";
-    });
+    }
 });
 </script>
 
