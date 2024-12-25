@@ -9,10 +9,10 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
     const email = document.getElementById('email').value;
     const message = document.getElementById('message').value;
 
-    // Cloudflare Worker URL (your actual Worker URL)
-    const cloudflareWorkerURL = 'https://huatbigbig.yongleng1989.workers.dev';  // <-- Your Cloudflare Worker URL
+    // GitHub API URL for triggering the Action
+    const githubAPIURL = 'https://api.github.com/repos/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/dispatches';  // Replace with your repository's URL
 
-    // Create a data object to send to the Cloudflare Worker
+    // Create a data object to send to GitHub Action
     const formData = {
         name: name,
         sex: sex,
@@ -21,17 +21,21 @@ document.getElementById('claimForm').addEventListener('submit', function(event) 
         message: message,
     };
 
-    // Send the form data to Cloudflare Worker
-    fetch(cloudflareWorkerURL, {
+    // Send the form data to GitHub Actions
+    fetch(githubAPIURL, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `token ${process.env.PERSONAL_ACCESS_TOKEN}`,  // Use GitHub Secrets for token
         },
-        body: JSON.stringify(formData),  // Convert form data to JSON format
+        body: JSON.stringify({
+            event_type: 'send-telegram-message',
+            client_payload: formData
+        })
     })
     .then(response => response.json())
     .then(data => {
-        // Handle success or failure response from Cloudflare Worker
+        // Handle success or failure response from GitHub Action
         if (data.status === 'success') {
             document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
             document.getElementById('claimForm').reset(); // Clear the form after submission
