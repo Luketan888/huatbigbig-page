@@ -3,184 +3,79 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Claim Your Free Meal</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-            background-color: #f9f9f9;
-            margin: 0;
-            padding: 0;
-            color: #333;
-        }
-        header {
-            background-color: #ff9800;
-            color: white;
-            padding: 20px 0;
-            text-align: center;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 2.5em;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        .container {
-            max-width: 900px;
-            margin: 50px auto;
-            background-color: white;
-            padding: 30px;
-            box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1);
-            border-radius: 15px;
-            text-align: center;
-        }
-        .form-field {
-            width: 90%;
-            padding: 12px;
-            font-size: 1em;
-            margin-top: 15px;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-sizing: border-box;
-        }
-        button {
-            background-color: #ff9800;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            font-size: 1.2em;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
-        button:hover {
-            background-color: #e58900;
-            transform: scale(1.05);
-        }
-        footer {
-            text-align: center;
-            margin-top: 30px;
-            font-size: 1em;
-            color: #777;
-        }
-        .confirmation-message {
-            font-size: 1.2em;
-            margin-top: 20px;
-            color: green;
-        }
-        .disclaimer {
-            font-size: 0.9em;
-            color: #555;
-            margin-top: 20px;
-        }
-        .form-description {
-            font-size: 1.2em;
-            margin-bottom: 20px;
-            color: #555;
-        }
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
-            button {
-                padding: 12px 25px;
-                font-size: 1em;
-            }
-            .container {
-                padding: 20px;
-            }
-        }
-    </style>
+    <title>Claim Form</title>
 </head>
 <body>
-
-<header>
-    <h1>Claim Your Free Meal!</h1>
-</header>
-
-<div class="container">
-    <p class="form-description">
-        Zhi Quan is a generous benefactor offering a free meal to those in need. Share your details to claim this gift — potentially a free Haidilao meal! 🥳
-    </p>
-
-    <!-- Form for user details -->
+    <h1>Claim Form</h1>
     <form id="claimForm">
-        <input type="text" id="name" class="form-field" placeholder="Your Name" required>
-        <select id="sex" class="form-field" required>
-            <option value="">Select Sex</option>
-            <option value="Male">Male</option>
-            <option value="Female">Female</option>
-            <option value="Other">Other</option>
-        </select>
-        <input type="number" id="age" class="form-field" placeholder="Your Age" required>
-        <input type="email" id="email" class="form-field" placeholder="Your Email Address" required>
-        <textarea id="message" class="form-field" placeholder="Any message?" rows="4"></textarea>
-
-        <button type="submit">Claim Your Free Meal</button>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+        
+        <label for="sex">Sex:</label>
+        <select id="sex" name="sex" required>
+            <option value="M">Male</option>
+            <option value="F">Female</option>
+        </select><br><br>
+        
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required><br><br>
+        
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+        
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" required></textarea><br><br>
+        
+        <button type="submit">Submit</button>
     </form>
 
-    <p id="confirmationMessage" class="confirmation-message"></p>
+    <p id="confirmationMessage"></p>
 
-    <!-- Disclaimer text -->
-    <p class="disclaimer">
-        To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
-    </p>
-</div>
+    <script>
+        document.getElementById('claimForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-<footer>
-    <p>&copy; 2024 Claim Your Free Meal | All Rights Reserved</p>
-</footer>
+            // Get the form data values
+            const name = document.getElementById('name').value;
+            const sex = document.getElementById('sex').value;
+            const age = document.getElementById('age').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
 
-<script>
-document.getElementById('claimForm').addEventListener('submit', function(event) {
-    event.preventDefault();
+            // Cloudflare Worker URL (your actual Worker URL)
+            const cloudflareWorkerURL = 'https://huatbigbig.yongleng1989.workers.dev';  // <-- Your Cloudflare Worker URL
 
-    // Get the form data values
-    const name = document.getElementById('name').value;
-    const sex = document.getElementById('sex').value;
-    const age = document.getElementById('age').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
+            // Create a data object to send to the Cloudflare Worker
+            const formData = {
+                name: name,
+                sex: sex,
+                age: age,
+                email: email,
+                message: message,
+            };
 
-    // GitHub API URL for triggering the Action
-    const githubAPIURL = 'https://api.github.com/repos/YOUR_GITHUB_USERNAME/YOUR_REPOSITORY_NAME/dispatches';  // Replace with your repository's URL
-
-    // Create a data object to send to GitHub Action
-    const formData = {
-        name: name,
-        sex: sex,
-        age: age,
-        email: email,
-        message: message,
-    };
-
-    // Send the form data to GitHub Actions
-    fetch(githubAPIURL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `token YOUR_PERSONAL_ACCESS_TOKEN`,  // Use GitHub Secrets for token
-        },
-        body: JSON.stringify({
-            event_type: 'send-telegram-message',
-            client_payload: formData
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        // Handle success or failure response from GitHub Action
-        if (data.status === 'success') {
-            document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
-            document.getElementById('claimForm').reset(); // Clear the form after submission
-        } else {
-            document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
-        }
-    })
-    .catch(error => {
-        document.getElementById('confirmationMessage').textContent = "Error: Unable to connect to the server.";
-    });
-});
-</script>
-
+            // Send the form data to Cloudflare Worker
+            fetch(cloudflareWorkerURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData),  // Convert form data to JSON format
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle success or failure response from Cloudflare Worker
+                if (data.status === 'success') {
+                    document.getElementById('confirmationMessage').textContent = "Your claim has been submitted successfully!";
+                    document.getElementById('claimForm').reset(); // Clear the form after submission
+                } else {
+                    document.getElementById('confirmationMessage').textContent = "Error: Unable to send the message.";
+                }
+            })
+            .catch(error => {
+                document.getElementById('confirmationMessage').textContent = "Error: Unable to connect to the server.";
+            });
+        });
+    </script>
 </body>
 </html>
