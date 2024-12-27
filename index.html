@@ -115,6 +115,10 @@
         padding: 20px;
       }
     }
+    /* Add some custom style for the Imgur embeds if needed */
+    .imgur-embed-pub {
+      margin-bottom: 20px; /* Space between embeds */
+    }
   </style>
 </head>
 <body>
@@ -153,9 +157,11 @@
   <p>© 2024 Claim Your Free Meal | All Rights Reserved</p>
 </footer>
 
-<!-- Use direct links from Imgur for images -->
-<img src="https://i.imgur.com/2C4t8oF.png" alt="Floating Image 1" class="floating-image" id="image1">
-<img src="https://i.imgur.com/lWJzL0a.png" alt="Floating Image 2" class="floating-image" id="image2">
+<!-- Imgur embed code -->
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/ADe3wOj" data-context="false" ><a href="//imgur.com/a/ADe3wOj"></a></blockquote>
+<blockquote class="imgur-embed-pub" lang="en" data-id="a/QHu2OLV" data-context="false" ><a href="//imgur.com/a/QHu2OLV"></a></blockquote>
+
+<script async src="//s.imgur.com/min/embed.js" charset="utf-8"></script>
 
 <script>
   document.getElementById('claimForm').addEventListener('submit', async function (e) {
@@ -202,26 +208,7 @@
     }
   });
 
-  const floatingImages = [
-    { element: document.getElementById('image1'), speed: 1 },
-    { element: document.getElementById('image2'), speed: 0.8 }
-  ];
-
-  floatingImages.forEach(({ element, speed }) => {
-    const moveImage = () => {
-      const viewportWidth = window.innerWidth;
-      const viewportHeight = window.innerHeight;
-
-      const randomX = Math.random() * (viewportWidth - element.width);
-      const randomY = Math.random() * (viewportHeight - element.height);
-
-      element.style.transition = `transform ${5 / speed}s ease-in-out`;
-      element.style.transform = `translate(${randomX}px, ${randomY}px)`;
-    };
-
-    setInterval(moveImage, 5000);
-    moveImage();
-  });
+  // Note: The floating images animation won't work with this embed method
 </script>
 
 </body>
