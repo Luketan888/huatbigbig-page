@@ -17,10 +17,11 @@
       justify-content: center;
       align-items: center;
       min-height: 100vh;
+      overflow: hidden;
     }
     header {
       background-color: transparent;
-      padding: 10px 0; /* Reduced padding to bring the header closer to the form */
+      padding: 10px 0;
       text-align: center;
     }
     header h1 {
@@ -43,7 +44,7 @@
       max-width: 600px;
       width: 90%;
       text-align: center;
-      margin: 20px auto; /* Adjusted to bring the form closer to the header */
+      margin: 20px auto;
     }
     .form-description {
       font-size: 1.2em;
@@ -63,7 +64,7 @@
       box-sizing: border-box;
     }
     select.form-field {
-      height: 48px; /* Match the height of other input fields */
+      height: 48px;
     }
     button {
       background-color: #ffcc00;
@@ -96,16 +97,12 @@
       margin-top: 20px;
       text-align: center;
     }
-    @media (max-width: 768px) {
-      header h1 {
-        font-size: 2em;
-      }
-      button {
-        font-size: 1em;
-      }
-      .container {
-        padding: 20px;
-      }
+    .floating-image {
+      position: absolute;
+      width: 100px;
+      height: auto;
+      z-index: 1;
+      pointer-events: none;
     }
   </style>
 </head>
@@ -131,7 +128,6 @@
     <input type="number" id="age" class="form-field" placeholder="Your Age" required>
     <input type="email" id="email" class="form-field" placeholder="Your Email Address" required>
     <textarea id="message" class="form-field" placeholder="Any message?" rows="4"></textarea>
-
     <button type="submit">Claim Your Free Meal</button>
   </form>
 
@@ -140,6 +136,9 @@
     To be eligible for the free meal, please mention 'HuatBigBig' to Zhi Quan in person.
   </div>
 </div>
+
+<img src="https://drive.google.com/uc?id=1KQ5JmZd8x7CY2BtbNOCwQXWNy7mGtKvN" alt="Floating Image 1" class="floating-image" id="image1">
+<img src="https://drive.google.com/uc?id=1VOwQuFmFsx21urIIjWfDAN9hhq1jHjSD" alt="Floating Image 2" class="floating-image" id="image2">
 
 <footer>
   <p>© 2024 Claim Your Free Meal | All Rights Reserved</p>
@@ -189,6 +188,17 @@
       alert('Error: Unable to connect to the server. Please try again later.');
     }
   });
+
+  const images = [document.getElementById('image1'), document.getElementById('image2')];
+  function moveImage(image) {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 100);
+    image.style.transform = `translate(${x}px, ${y}px)`;
+  }
+  function animateImages() {
+    images.forEach(image => moveImage(image));
+  }
+  setInterval(animateImages, 2000);
 </script>
 
 </body>
