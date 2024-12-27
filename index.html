@@ -10,8 +10,8 @@
       font-family: 'Roboto', sans-serif;
       margin: 0;
       padding: 0;
-      background: linear-gradient(to right, #6a11cb, #2575fc);
-      color: #333;
+      background: #1a1a1a; /* Dark background for contrast */
+      color: #f0f0f0; /* Light text for contrast */
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -20,14 +20,13 @@
     }
     header {
       background-color: transparent;
-      color: white;
       padding: 20px 0;
       text-align: center;
     }
     header h1 {
       margin: 0;
       font-size: 2.5em;
-      color: #6a11cb;
+      color: #ffcc00; /* Bright yellow for high contrast */
       font-weight: 700;
       text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
       animation: float 2s infinite;
@@ -37,9 +36,9 @@
       50% { transform: translateY(-10px); }
     }
     .container {
-      background: #ffffff;
+      background: #333; /* Slightly lighter than body for form contrast */
       padding: 30px;
-      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
       border-radius: 15px;
       max-width: 600px;
       width: 90%;
@@ -48,7 +47,7 @@
     }
     .form-description {
       font-size: 1.2em;
-      color: #666;
+      color: #e0e0e0;
       margin-bottom: 20px;
     }
     .form-field {
@@ -56,14 +55,16 @@
       padding: 12px;
       font-size: 1em;
       margin-top: 15px;
-      border: 1px solid #ddd;
+      border: 1px solid #555;
+      background-color: #222;
+      color: #f0f0f0;
       border-radius: 8px;
       margin-bottom: 20px;
       box-sizing: border-box;
     }
     button {
-      background-color: #6a11cb;
-      color: white;
+      background-color: #ffcc00; /* Bright yellow for the button */
+      color: #1a1a1a;
       border: none;
       padding: 15px 30px;
       font-size: 1.2em;
@@ -73,14 +74,14 @@
       width: 100%;
     }
     button:hover {
-      background-color: #2575fc;
+      background-color: #e6b800;
       transform: scale(1.05);
     }
     .message-box {
       display: none;
-      background-color: #e8ffe8;
-      color: #2a7a2a;
-      border: 2px solid #2a7a2a;
+      background-color: #339933;
+      color: #fff;
+      border: 2px solid #4CAF50;
       padding: 20px;
       font-size: 1.2em;
       margin-top: 30px;
@@ -88,7 +89,7 @@
     }
     footer {
       font-size: 0.9em;
-      color: #999;
+      color: #888;
       margin-top: 20px;
       text-align: center;
     }
