@@ -156,6 +156,12 @@
     const email = document.getElementById('email').value.trim();
     const message = document.getElementById('message').value.trim();
 
+    // Validate form fields before sending data
+    if (!name || !sex || !age || !email || !message) {
+      alert('Please fill in all fields before submitting.');
+      return; // Stop the submission if any field is empty
+    }
+
     // Validate age (positive integer)
     if (!/^[1-9][0-9]*$/.test(age)) {
       alert('Please enter a valid positive integer for age.');
